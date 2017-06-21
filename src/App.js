@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import Header from './components/header/header'
 import Login from './components/login/login'
+import Autor from './components/autor/autor'
+import Footer from './components/footer/footer'
 import './App.css'
 
 class App extends Component {
@@ -9,6 +11,8 @@ class App extends Component {
       <div>
         <Header />
         <Login />
+        <Autor />
+        <Footer />
       </div>
     );
   }
