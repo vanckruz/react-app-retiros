@@ -1,18 +1,12 @@
 import React, { Component } from 'react';
-import logo from '../../logo.svg';
+import Nav from '../nav'
 import './header.css';
 
 class Header extends Component {
   render() {
     return (
       <header>
-          <nav className="navbar navbar-inverse bg-primary">
-            <a className="navbar-brand">
-              <img src={logo} width="30" height="30" className="app-logo d-inline-block align-top" alt="logo" />
-              Jhonny's wallet
-            </a>           
-          </nav>
-       
+          <Nav />       
           <h1 className="hidden-sm-down hidden-xs-down">React wallet</h1>
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none">
             <polygon className="svg--sm" fill="#fff" points="0,0 30,100 65,21 90,100 100,75 100,100 0,100"/>

@@ -57,13 +57,10 @@ class App extends Component {
 
 
   render() {
-    //const state = { ...props };
     return (
     <Router>
       <Switch>
-        <Route path='/' render={(props) => (
-          <AppUnlogged loginUser={"value"} {...props} />
-        )} />
+        <Route exact path='/' component={ () => <AppUnlogged data="test app" />} />
         <Route exact path="/wallet" component={AppLogged} />
         <Route exact path="/admin" component={AppAdmin} />  
         <Route component={NotFound} />                        

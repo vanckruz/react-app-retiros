@@ -18,7 +18,7 @@ class Login extends Component {
   }
     
   loginUser(){
-   console.log( this.props.loginUser );
+   console.log( this.props.data);
   }
 
   loginAdmin(){
