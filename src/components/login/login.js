@@ -10,10 +10,10 @@ class Login extends Component {
             <div className="row">
                 <div className="col-lg-4 col-sm-12 col-xs-12">
                     <div className="card">
-                        <img className="card-img-top" src={wallet} alt="Card image cap"/>
+                        <img className="card-img-top" src={wallet} alt={wallet} />
                         <div className="card-block">
                             <h4 className="card-title">Gestión de wallet</h4>
-                            <p className="card-text">utilice esta app como su billetera personal y administre su dinero.</p>
+                            <p className="card-text">Utilice esta app como su billetera personal y administre su dinero.</p>
                         </div>
                     </div>
                 </div>
@@ -23,15 +23,24 @@ class Login extends Component {
                             Login
                         </div>
                         <div className="card-block">
-                            <h4 className="card-title">Autentificación rápida</h4>
-                            <p className="card-text">Inicia sesión fácilmente con google.</p>
+                            <form action="">
+                                <div className="form-group">
+                                    <input type="email" className="form-control" placeholder="email" required/>
+                                </div>
+                                <div className="form-group">
+                                    <input type="password" className="form-control" placeholder="*****" required/>  
+                                </div>
+                                <a className="btn btn-primary">Admin login</a>  
+                            </form>                                                
+                            <hr/>
+                            <label>Si eres usuario inicia sesiòn con google</label>
                             <a className="btn btn-primary"><i className="fa fa-google" aria-hidden="true"></i> Login with google</a>
                         </div>
                     </div>
                 </div>
                 <div className="col-lg-4 col-sm-12 col-xs-12">
                     <div className="card">
-                        <img className="card-img-top" src={history} alt="Card image cap"/>
+                        <img className="card-img-top" src={history}  alt={history} />
                         <div className="card-block">
                             <h4 className="card-title">Consulta</h4>
                             <p className="card-text">Consulte sus gastos y retiros de una manera rápida.</p>
