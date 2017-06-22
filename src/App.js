@@ -5,8 +5,7 @@ import AppAdmin from './components/app-admin/app-admin'
 import NotFound from './components/404'
 import firebase from 'firebase'
 //import { Router, Switch, Route } from 'react-router-dom'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
-import { Switch } from 'react-router-dom'
+import { Switch, BrowserRouter as Router, Route } from 'react-router-dom'
 import './App.css'
 
 class App extends Component {
