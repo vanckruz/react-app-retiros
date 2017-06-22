@@ -4,6 +4,27 @@ import history from './history.png';
 import './login.css'
 
 class Login extends Component {
+  constructor(...props){
+    super(...props)
+    this.state = {
+      wallet: {},
+      user: {},
+      admin: {}
+    }
+
+    this.loginUser = this.loginUser.bind(this);
+    this.loginAdmin = this.loginAdmin.bind(this);
+
+  }
+    
+  loginUser(){
+   console.log( this.props.loginUser );
+  }
+
+  loginAdmin(){
+
+  }  
+
   render() {
     return (   
         <div className="container">     
@@ -34,7 +55,7 @@ class Login extends Component {
                             </form>                                                
                             <hr/>
                             <label>Si eres usuario inicia sesiòn con google</label>
-                            <a className="btn btn-primary"><i className="fa fa-google" aria-hidden="true"></i> Login with google</a>
+                            <a className="btn btn-primary" onClick={this.loginUser}><i className="fa fa-google" aria-hidden="true"></i> Login with google</a>
                         </div>
                     </div>
                 </div>

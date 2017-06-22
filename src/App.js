@@ -55,11 +55,15 @@ class App extends Component {
       .catch(error => console.log(`Error ${error.code}: ${error.message}`));
   }
 
+
   render() {
+    //const state = { ...props };
     return (
     <Router>
       <Switch>
-        <Route exact path="/" component={AppUnlogged} />
+        <Route path='/' render={(props) => (
+          <AppUnlogged loginUser={"value"} {...props} />
+        )} />
         <Route exact path="/wallet" component={AppLogged} />
         <Route exact path="/admin" component={AppAdmin} />  
         <Route component={NotFound} />                        
