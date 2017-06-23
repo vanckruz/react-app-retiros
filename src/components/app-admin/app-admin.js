@@ -8,6 +8,13 @@ class AppAdmin extends Component {
     this.state = {
       wallet : {}
     }
+
+    this.handleLogout = this.handleLogout.bind(this)    
+  }
+
+  handleLogout(e){
+    e.preventDefault()
+    this.props.logout()
   }
 
   render() {
@@ -16,7 +23,16 @@ class AppAdmin extends Component {
         <Nav />
         <div className="container">
           <div className="row">
-            <div className="col-md-6 col-xs-12">
+            <div className="col-md-4">  
+                <div className="list-group">
+                  <a className="list-group-item active">
+                    {this.props.user}
+                  </a>
+                  <a className="list-group-item list-group-item-action" onClick={this.handleLogout}>Cerrar sesión</a>
+                </div>              
+            </div>
+
+            <div className="col-md-4 col-xs-12">
             
                 <h3>Depositos</h3>
                 <ul className="list-group">
@@ -33,7 +49,7 @@ class AppAdmin extends Component {
 
             </div>
 
-            <div className="col-md-6 col-xs-12">
+            <div className="col-md-4 col-xs-12">
                 <h3>Retiros</h3>
                 <ul className="list-group">
 

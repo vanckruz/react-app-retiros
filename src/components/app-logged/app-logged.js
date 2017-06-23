@@ -10,17 +10,18 @@ class AppLogged extends Component {
       user: null,
       wallet : null
     }
-    this.logout = this.logout.bind()
+    this.handleLogout = this.handleLogout.bind(this)
   }
 
   componentWillMount(){
 
   }
 
-  logout(e){
+  handleLogout(e){
     e.preventDefault()
     this.props.logout()
   }
+  
   render() {
     console.log(this.props.user)
     return (
@@ -34,7 +35,7 @@ class AppLogged extends Component {
                   <a className="list-group-item active">
                     {this.props.user}
                   </a>
-                  <a className="list-group-item list-group-item-action" onClick={this.logout}>Cerrar sesión</a>
+                  <a className="list-group-item list-group-item-action" onClick={this.handleLogout}>Cerrar sesión</a>
                 </div>              
             </div>
 

@@ -23,19 +23,20 @@ class App extends Component {
   }
 
   componentWillMount(){
-    if(localStorage.getItem('user')){
-      if(JSON.parse(localStorage.getItem('user')).tipo === 'user' ){
+      if( localStorage.getItem('user') ){
         this.setState({
           user: JSON.parse(localStorage.getItem('user')).email,          
           userLoggedIn: true
         })
-      }else if(JSON.parse(localStorage.getItem('user')).tipo === 'admin' ){
+      }
+      
+      if( localStorage.getItem('admin') ){
+        console.log("tree")
         this.setState({
-          admin: JSON.parse(localStorage.getItem('user')).email,
+          admin: localStorage.getItem('admin'),
           AdminLoggedIn: true
         })
       }
-    }
   }
 
   handleLoginUser(){
@@ -43,8 +44,7 @@ class App extends Component {
 
     firebase.auth().signInWithPopup(provider)
       .then(result => {
-        console.log(result.user.email, result.user)    
-        localStorage.setItem('user', JSON.stringify({tipo: 'user', email: result.user.email}))
+        localStorage.setItem('user', result.user.email)
         this.setState({
           user: result.user.email,
           userLoggedIn: true
@@ -57,8 +57,8 @@ class App extends Component {
   handleLoginAdmin(email, pw){
     firebase.auth().signInWithEmailAndPassword(email, pw)      
     .then(result => {
-      console.log("admin logged")
-      localStorage.setItem('user', JSON.stringify({tipo: 'admin', email: result.user.email}))
+      console.log("admin logged", result.email)
+      localStorage.setItem('admin', result.email)
       this.setState({
         admin: result.email,
         AdminLoggedIn: true
@@ -70,8 +70,14 @@ class App extends Component {
   handleLogout(){
     firebase.auth().signOut()
       .then(result => {
-        console.log(`${result.user.email} ha iniciado sesión`)
         localStorage.removeItem('user')
+        localStorage.removeItem('admin')        
+        this.setState({
+          admin: null,
+          user: null,
+          userLoggedIn: false,
+          AdminLoggedIn: false
+        })        
       })
       .catch(error => console.log(`Error ${error.code}: ${error.message}`));
     
@@ -80,7 +86,7 @@ class App extends Component {
   render() {    
     if (this.state.userLoggedIn) {
       return <AppLogged wallet={this.state.wallet} user={this.state.user} logout={this.handleLogout} />
-    }else if(this.state.adminLoggedIn){
+    }else if(this.state.AdminLoggedIn){
       return <AppAdmin user={this.state.admin} logout={this.handleLogout} />
     }
 
