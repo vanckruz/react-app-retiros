@@ -4,8 +4,8 @@ import AppLogged from './components/app-logged/app-logged'
 import AppAdmin from './components/app-admin/app-admin'
 import NotFound from './components/404'
 import firebase from 'firebase'
-//import { Router, Switch, Route } from 'react-router-dom'
-import { Switch, BrowserRouter as Router, Route } from 'react-router-dom'
+import { render } from 'react-dom'
+import { Redirect, Switch, BrowserRouter as Router, Route } from 'react-router-dom'
 import './App.css'
 
 class App extends Component {
@@ -14,7 +14,7 @@ class App extends Component {
     super(...props)
     this.state = {
       wallet: {},
-      user: {},
+      user: null,
       admin: {}
     }
 
@@ -24,35 +24,35 @@ class App extends Component {
   }
 
   componentWillMount(){
-     /*
-      const database = firebase.database().ref().child('object').child('name') 
-
-      database.on('value', snapshot => {
-        this.setState({
-          name: snapshot.val()
-        })
-        console.log(snapshot)
-      })
-      */
-    
+    firebase.auth().onAuthStateChanged( user => {
+      this.setState({
+        user
+      })      
+    })
+    console.log(this.state.user)
   }
 
   handleLoginUser(){
-    const provider = new firebase.auth.GoogleAuthProvider();
+    let provider = new firebase.auth.GoogleAuthProvider();
 
     firebase.auth().signInWithPopup(provider)
-      .then(result => console.log(`${result.user.email} ha iniciado sesión`))
+      .then(result => window.location.href = '/wallet' )
       .catch(error => console.log(`Error ${error.code}: ${error.message}`));
+    
   }
 
-  handleLoginAdmin(){
-
+  handleLoginAdmin(email, pw){
+    console.log(email, pw)
+    firebase.auth().signInWithEmailAndPassword(email, pw)      
+    .then(result => window.location.href = '/admin' )
+    .catch(error => console.log(`Error ${error.code}: ${error.message}`));
   }
 
   handleLogout(){
     firebase.auth().signOut()
       .then(result => console.log(`${result.user.email} ha iniciado sesión`))
       .catch(error => console.log(`Error ${error.code}: ${error.message}`));
+      <Redirect to="/" />
   }
 
 
@@ -60,7 +60,7 @@ class App extends Component {
     return (
     <Router>
       <Switch>
-        <Route exact path='/' component={ () => <AppUnlogged data="test app" />} />
+        <Route exact path='/' component={ () => <AppUnlogged login={this.handleLoginUser} admin={this.handleLoginAdmin}/>} />
         <Route exact path="/wallet" component={AppLogged} />
         <Route exact path="/admin" component={AppAdmin} />  
         <Route component={NotFound} />                        

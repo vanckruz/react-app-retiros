@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import firebase from 'firebase'
 import Nav from '../nav'
 import './app-logged.css'
 
@@ -6,14 +7,22 @@ class AppLogged extends Component {
   constructor(...props){
     super(...props)
     this.state = {
+      user: {},
       wallet : {}
     }
+  }
+
+  componentWillMount(){
+
   }
 
   render() {
     return (
       <div>
         <Nav />
+        <pre>
+          {this.state.user}
+        </pre>
         <div className="container">
           <div className="row">
             <div className="col-md-6 col-xs-12">

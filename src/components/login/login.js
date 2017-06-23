@@ -7,9 +7,8 @@ class Login extends Component {
   constructor(...props){
     super(...props)
     this.state = {
-      wallet: {},
-      user: {},
-      admin: {}
+        email: "",
+        pass: ""
     }
 
     this.loginUser = this.loginUser.bind(this);
@@ -18,14 +17,28 @@ class Login extends Component {
   }
     
   loginUser(){
-   console.log( this.props.data);
+      this.props.loginUser();
   }
 
-  loginAdmin(){
-
+  loginAdmin(e){
+    e.preventDefault()
+      this.props.admin(this.state.email, this.state.pass);
   }  
 
+  handleUser(e){
+    e.preventDefault()
+    this.setState({email: e.target.value})
+    console.log(this.state.email)    
+  }
+
+  handlePass(e){
+    e.preventDefault()
+    this.setState({pass: e.target.value})
+    console.log(this.state.pass)        
+  }
+
   render() {
+      
     return (   
         <div className="container">     
             <div className="row">
@@ -44,14 +57,14 @@ class Login extends Component {
                             Login
                         </div>
                         <div className="card-block">
-                            <form action="">
+                            <form onSubmit={this.loginAdmin}>
                                 <div className="form-group">
-                                    <input type="email" className="form-control" placeholder="email" required/>
+                                    <input type="email" name="email" className="form-control" placeholder="email" required onChange={this.handleUser.bind(this)} value={this.state.email} />
                                 </div>
                                 <div className="form-group">
-                                    <input type="password" className="form-control" placeholder="*****" required/>  
+                                    <input type="password" name="pass" className="form-control" placeholder="*****" required onChange={this.handlePass.bind(this)} value={this.state.pass} />  
                                 </div>
-                                <a className="btn btn-primary">Admin login</a>  
+                                <input type="submit" className="btn btn-primary" value="Login admin" /> 
                             </form>                                                
                             <hr/>
                             <label>Si eres usuario inicia sesiòn con google</label>
