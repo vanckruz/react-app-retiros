@@ -19,7 +19,6 @@ class AppUnlogged extends Component {
   }
 
   loginAdmin(user, pass){
-    console.log(user, pass)
     this.props.admin(user, pass)
   }
 

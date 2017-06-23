@@ -22,19 +22,17 @@ class Login extends Component {
 
   loginAdmin(e){
     e.preventDefault()
-      this.props.admin(this.state.email, this.state.pass);
+    this.props.admin(this.state.email, this.state.pass);
   }  
 
   handleUser(e){
     e.preventDefault()
     this.setState({email: e.target.value})
-    console.log(this.state.email)    
   }
 
   handlePass(e){
     e.preventDefault()
     this.setState({pass: e.target.value})
-    console.log(this.state.pass)        
   }
 
   render() {

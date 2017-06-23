@@ -2,10 +2,7 @@ import React, { Component } from 'react'
 import AppUnlogged from './components/app-unlogged/app-unlogged'
 import AppLogged from './components/app-logged/app-logged'
 import AppAdmin from './components/app-admin/app-admin'
-import NotFound from './components/404'
 import firebase from 'firebase'
-import { render } from 'react-dom'
-import { Redirect, Switch, BrowserRouter as Router, Route } from 'react-router-dom'
 import './App.css'
 
 class App extends Component {
@@ -13,9 +10,11 @@ class App extends Component {
   constructor(...props){
     super(...props)
     this.state = {
-      wallet: {},
+      wallet: null,
       user: null,
-      admin: {}
+      userLoggedIn: false,
+      AdminLoggedIn: false,
+      admin: null
     }
 
     this.handleLoginUser = this.handleLoginUser.bind(this);
@@ -24,49 +23,68 @@ class App extends Component {
   }
 
   componentWillMount(){
-    firebase.auth().onAuthStateChanged( user => {
-      this.setState({
-        user
-      })      
-    })
-    console.log(this.state.user)
+    if(localStorage.getItem('user')){
+      if(JSON.parse(localStorage.getItem('user')).tipo === 'user' ){
+        this.setState({
+          user: JSON.parse(localStorage.getItem('user')).email,          
+          userLoggedIn: true
+        })
+      }else if(JSON.parse(localStorage.getItem('user')).tipo === 'admin' ){
+        this.setState({
+          admin: JSON.parse(localStorage.getItem('user')).email,
+          AdminLoggedIn: true
+        })
+      }
+    }
   }
 
   handleLoginUser(){
     let provider = new firebase.auth.GoogleAuthProvider();
 
     firebase.auth().signInWithPopup(provider)
-      .then(result => window.location.href = '/wallet' )
+      .then(result => {
+        console.log(result.user.email, result.user)    
+        localStorage.setItem('user', JSON.stringify({tipo: 'user', email: result.user.email}))
+        this.setState({
+          user: result.user.email,
+          userLoggedIn: true
+        })
+      } )
       .catch(error => console.log(`Error ${error.code}: ${error.message}`));
     
   }
 
   handleLoginAdmin(email, pw){
-    console.log(email, pw)
     firebase.auth().signInWithEmailAndPassword(email, pw)      
-    .then(result => window.location.href = '/admin' )
+    .then(result => {
+      console.log("admin logged")
+      localStorage.setItem('user', JSON.stringify({tipo: 'admin', email: result.user.email}))
+      this.setState({
+        admin: result.email,
+        AdminLoggedIn: true
+      })
+    })
     .catch(error => console.log(`Error ${error.code}: ${error.message}`));
   }
 
   handleLogout(){
     firebase.auth().signOut()
-      .then(result => console.log(`${result.user.email} ha iniciado sesión`))
+      .then(result => {
+        console.log(`${result.user.email} ha iniciado sesión`)
+        localStorage.removeItem('user')
+      })
       .catch(error => console.log(`Error ${error.code}: ${error.message}`));
-      <Redirect to="/" />
+    
   }
 
+  render() {    
+    if (this.state.userLoggedIn) {
+      return <AppLogged wallet={this.state.wallet} user={this.state.user} logout={this.handleLogout} />
+    }else if(this.state.adminLoggedIn){
+      return <AppAdmin user={this.state.admin} logout={this.handleLogout} />
+    }
 
-  render() {
-    return (
-    <Router>
-      <Switch>
-        <Route exact path='/' component={ () => <AppUnlogged login={this.handleLoginUser} admin={this.handleLoginAdmin}/>} />
-        <Route exact path="/wallet" component={AppLogged} />
-        <Route exact path="/admin" component={AppAdmin} />  
-        <Route component={NotFound} />                        
-      </Switch>
-    </Router>
-    )
+    return <AppUnlogged login={this.handleLoginUser} admin={this.handleLoginAdmin} />
   }
 }
 

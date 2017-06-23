@@ -7,25 +7,38 @@ class AppLogged extends Component {
   constructor(...props){
     super(...props)
     this.state = {
-      user: {},
-      wallet : {}
+      user: null,
+      wallet : null
     }
+    this.logout = this.logout.bind()
   }
 
   componentWillMount(){
 
   }
 
+  logout(e){
+    e.preventDefault()
+    this.props.logout()
+  }
   render() {
+    console.log(this.props.user)
     return (
       <div>
-        <Nav />
-        <pre>
-          {this.state.user}
-        </pre>
+        <Nav nombre={this.props.user}/>
         <div className="container">
           <div className="row">
-            <div className="col-md-6 col-xs-12">
+            
+            <div className="col-md-4">  
+                <div className="list-group">
+                  <a className="list-group-item active">
+                    {this.props.user}
+                  </a>
+                  <a className="list-group-item list-group-item-action" onClick={this.logout}>Cerrar sesión</a>
+                </div>              
+            </div>
+
+            <div className="col-md-4 col-xs-12">
               <h2>Depositar</h2>
               <hr/>
               <form>
@@ -36,7 +49,7 @@ class AppLogged extends Component {
                   <input className="btn btn-primary" type="submit" value="depositar"/>
               </form>
             </div>
-            <div className="col-md-6 col-xs-12">
+            <div className="col-md-4 col-xs-12">
               <h2>Retirar</h2>
               <hr/>
               <form>
