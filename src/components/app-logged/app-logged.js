@@ -156,31 +156,6 @@ class AppLogged extends Component {
         </div>
         <div className="container">
           <div className="row">
-            <div className="col-md-12 col-xs-12">
-              <div className="card">
-                <h3 className="card-header bg-primary">Totales</h3>
-                <div className="card-block">
-                  <div className="col-md-4 col-xs-12">
-                    <table className="table table-bordered" >
-                      <tbody>
-                        <tr>
-                          <th>Depositado </th>
-                          <td>$  </td>
-                        </tr>
-                        <tr>
-                          <th>Retirado </th>
-                          <td>$  </td>
-                        </tr>                      
-                      </tbody>
-                    </table>  
-                  </div>
-                </div>
-              </div>              
-            </div>
-          </div>
-        </div>
-        <div className="container">
-          <div className="row">
             <div className="col-xs-12 col-md-12">
               <div className="card">
                 <h3 className="card-header bg-primary">Detalle de las operaciones</h3>
@@ -192,7 +167,7 @@ class AppLogged extends Component {
                         ? 
                           <JSONTree data={this.props.wallet} />
                         :
-                        <span>cargando....</span>
+                        <span>Sin operaciones...</span>
                       ) 
                     }
                   </div>
