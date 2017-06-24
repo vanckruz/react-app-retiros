@@ -3,10 +3,12 @@ import { render } from 'react-dom'
 import App from './App'
 import registerServiceWorker from './registerServiceWorker'
 import firebase from 'firebase'
+import $ from 'jquery'
+import swal from 'sweetalert'
 import './index.css'
 import 'bootstrap/dist/css/bootstrap.css'
+import 'sweetalert/dist/sweetalert.css'
 import 'font-awesome/css/font-awesome.css'
-
 firebase.initializeApp({
   apiKey: "AIzaSyDsFwUbsOZGPDXtLgZ-fkS2OFAvsgE2YoM",
   authDomain: "wallet-1bbd5.firebaseapp.com",
